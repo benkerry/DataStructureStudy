@@ -1,4 +1,4 @@
-#include"Stack.h"
+#include "Stack.h"
 
 Stack* InitStack(void){
     Stack* newStack = (Stack*)malloc(sizeof(Stack));

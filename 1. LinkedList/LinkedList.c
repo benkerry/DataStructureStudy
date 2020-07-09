@@ -1,4 +1,4 @@
-#include"LinkedList.h"
+#include "LinkedList.h"
 
 LinkedList* InitList(void){
     LinkedList *newList = (LinkedList*)malloc(sizeof(LinkedList));

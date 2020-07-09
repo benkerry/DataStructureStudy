@@ -1,7 +1,7 @@
 #ifndef __LINKEDLIST_H__
 #define __LINKEDLIST_H__
 
-#include<stdlib.h>
+#include <stdlib.h>
 
 typedef int ldata;
 typedef unsigned int uint;

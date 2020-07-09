@@ -1,7 +1,7 @@
 #ifndef __STACK_H__
 #define __STACK_H__
 
-#include<stdlib.h>
+#include <stdlib.h>
 
 typedef char sdata;
 typedef unsigned int uint;
