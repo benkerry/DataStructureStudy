@@ -13,12 +13,10 @@ typedef struct _ExpInfo{
     char *operators;
 } ExpInfo;
 
-struct _ConvertedExp{
+typedef struct _ConvertedExp{
     char *str_conv_exp;
     char **conv_exp;
-};
-
-typedef struct _ConvertedExp* ConvertedExp;
+} ConvertedExp;
 
 int Power(int, int);
 int Strlen(char*);
@@ -34,6 +32,7 @@ char* itostr(int);
 char* chartostr(char);
 int OpPriority(char);
 void SetExpInfo(ExpInfo*);
-ConvertedExp Infix2Postfix(char*);
+ConvertedExp* Infix2Postfix(char*);
+int ComputePostfix(ConvertedExp);
 
 #endif

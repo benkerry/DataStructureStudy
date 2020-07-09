@@ -195,10 +195,10 @@ void SetExpInfo(ExpInfo *info){
     info->params = params;
 }
 
-ConvertedExp Infix2Postfix(char *strexp){
+ConvertedExp* Infix2Postfix(char *strexp){
     Stack *opStack = InitStack();
     ExpInfo *exp = (ExpInfo*)malloc(sizeof(ExpInfo));
-    ConvertedExp result = (ConvertedExp)malloc(sizeof(ConvertedExp));
+    ConvertedExp *result = (ConvertedExp*)malloc(sizeof(ConvertedExp));
     int strlen = Strlen(strexp);
     int convlen;
     int expPointer = 0;
