@@ -1,4 +1,16 @@
-#include "Stack.h"
+#include"Stack.h"
+
+int FindChar(char* src, char tgt){
+    int i = 0;
+    
+    while(src[i] != '\0'){
+        if(src[i] == tgt)
+            return 1;
+        i++;
+    }
+    
+    return 0;
+}
 
 Stack* InitStack(void){
     Stack* newStack = (Stack*)malloc(sizeof(Stack));
@@ -21,6 +33,8 @@ uint SPush(Stack* tgt, sdata data){
 
 sdata SPop(Stack* tgt){
     sdata rtn = tgt->top->data;
+    
+    free(tgt->top);
     tgt->top = tgt->top->before;
     
     tgt->numOfData--;
@@ -30,4 +44,18 @@ sdata SPop(Stack* tgt){
 
 sdata SPick(Stack* tgt){
     return tgt->top->data;
+}
+
+Stack* CopyStack(Stack* src){
+    Stack *result = InitStack();
+    sdata temp[src->numOfData];
+    
+    for(int i = src->numOfData - 1; i >= 0; i--){
+        temp[i] = SPop(src);
+    }
+    for(int i = 0; i < src->numOfData; i++){
+        SPush(result, temp[i]);
+    }
+    
+    return result;
 }

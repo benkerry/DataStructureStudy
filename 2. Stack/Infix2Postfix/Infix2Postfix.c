@@ -1,4 +1,4 @@
-#include "Infix2Postfix.h"
+#include"Infix2Postfix.h"
 
 int Power(int origin, int up){
     int result = 1;
@@ -40,7 +40,6 @@ int Find(char tgt, char* src){
         if(tgt == src[i]){
             return i;
         }
-        
         i++;
     }
     
@@ -139,8 +138,11 @@ int OpPriority(char ch){
     if(ch == '+' || ch == '-'){
         return 1;
     }
-    else{
+    else if(ch == '*' || ch == '/'){
         return 2;
+    }
+    else{
+        return 0;
     }
 }
 
@@ -222,18 +224,18 @@ ConvertedExp* Infix2Postfix(char *strexp){
             convExp[expPointer++] = itostr(exp->params[paramsPointer++]);
         }
         else{
-            if(opStack->numOfData == 0 || (opStack->numOfData > 0 && OpPriority(SPick(opStack)) < OpPriority(exp->operators[opPointer]))){
-                SPush(opStack, exp->operators[opPointer++]);
+            if(opStack->numOfData == 0 || (opStack->numOfData > 0 && OpPriority(SPick(opStack)[0]) < OpPriority(exp->operators[opPointer]))){
+                SPush(opStack, chartostr(exp->operators[opPointer++]));
             }
             else{
-                convExp[expPointer++] = chartostr(SPop(opStack));
-                SPush(opStack, exp->operators[opPointer++]);
+                convExp[expPointer++] = SPop(opStack);
+                SPush(opStack, chartostr(exp->operators[opPointer++]));
             }
         }
     }
     
     while(opStack->numOfData){
-        convExp[expPointer++] = chartostr(SPop(opStack));
+        convExp[expPointer++] = SPop(opStack);
     }
     
     for(int i = 0; i < convlen; i++){
@@ -243,17 +245,54 @@ ConvertedExp* Infix2Postfix(char *strexp){
         
         free(add);
         free(del);
-        free(convExp[i]);
     }
+    
     strexp_result[Strlen(strexp_result) - 1] = '\0';
     
-    free(opStack);
     free(exp->params);
     free(exp->operators);
     free(exp);
+    free(opStack);
     
-    result->conv_exp = convExp;
     result->str_conv_exp = strexp_result;
+    result->convExp = convExp;
+    result->convLen = convlen;
+    
+    return result;
+}
+
+int ComputePostfixExp(ConvertedExp *exp){
+    Stack *numStack = InitStack();
+    int a, b;
+    int result;
+    
+    for(int i = 0; i < exp->convLen; i++){
+        if(OpPriority(exp->convExp[i][0])){
+            a = strtoi(SPop(numStack));
+            b = strtoi(SPop(numStack));
+            
+            switch(exp->convExp[i][0]){
+                case '+':
+                    SPush(numStack, itostr(a + b));
+                    break;
+                case '-':
+                    SPush(numStack, itostr(a - b));
+                    break;
+                case '*':
+                    SPush(numStack, itostr(a * b));
+                    break;
+                case '/':
+                    SPush(numStack, itostr(a / b));
+                    break;
+            }
+        }
+        else{
+            SPush(numStack, exp->convExp[i]);
+        }
+    }
+    
+    result = strtoi(SPop(numStack));
+    free(numStack);
     
     return result;
 }

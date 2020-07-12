@@ -1,9 +1,9 @@
 #ifndef __STACK_H__
 #define __STACK_H__
 
-#include <stdlib.h>
+#include<stdlib.h>
 
-typedef char sdata;
+typedef char* sdata;
 typedef unsigned int uint;
 
 typedef struct _node{
@@ -20,5 +20,6 @@ Stack* InitStack(void);
 uint SPush(Stack*, sdata);
 sdata SPop(Stack*);
 sdata SPick(Stack*);
+Stack* CopyStack(Stack*);
 
 #endif

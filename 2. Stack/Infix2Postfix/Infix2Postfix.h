@@ -4,7 +4,7 @@
 #ifndef __INFIX2POSTFIX_H__
 #define __INFIX2POSTFIX_H__
 
-#include "Stack.h"
+#include"Stack.h"
 #define MAX_EXP_LEN 10000
 
 typedef struct _ExpInfo{
@@ -15,7 +15,8 @@ typedef struct _ExpInfo{
 
 typedef struct _ConvertedExp{
     char *str_conv_exp;
-    char **conv_exp;
+    char **convExp;
+    int convLen;
 } ConvertedExp;
 
 int Power(int, int);
@@ -33,6 +34,6 @@ char* chartostr(char);
 int OpPriority(char);
 void SetExpInfo(ExpInfo*);
 ConvertedExp* Infix2Postfix(char*);
-int ComputePostfix(ConvertedExp);
+int ComputePostfixExp(ConvertedExp*);
 
 #endif
